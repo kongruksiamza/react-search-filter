@@ -7,7 +7,7 @@ function App() {
   const [dataFilter] = useState(["name","capital"]) 
 
   useEffect(()=>{
-    fetch("https://restcountries.eu/rest/v2/all")
+    fetch("https://restcountries.com/v2/all")//update link api
     .then(res=>res.json())
     .then(data=>{
       setCountries(data)
@@ -18,11 +18,14 @@ function App() {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
   const searchCountries=(countries)=>{
-      return countries.filter((item)=>{
-          return dataFilter.some((filter)=>{
+    return countries.filter((item)=>{
+        return dataFilter.some((filter)=>{
+            if(item[filter]){//check ค่าว่าง
               return item[filter].toString().toLowerCase().indexOf(word.toLowerCase())>-1
-          })
-      })
+            }
+        })
+
+    })
   }
   return (
     <div className="container">
